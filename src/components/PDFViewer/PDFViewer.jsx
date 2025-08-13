@@ -1,14 +1,12 @@
-import React, from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // --- CORREÇÃO CRÍTICA: Remoção da vírgula extra ---
 import { Document, Page, pdfjs } from 'react-pdf';
 import styles from './PDFViewer.module.css';
 
-// A configuração do worker do PDF.js permanece a mesma, usando o CDN confiável.
+// A configuração do worker usando o CDN da cdnjs permanece como a solução mais robusta.
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function PDFViewer({ onClose }) {
   const [numPages, setNumPages] = useState(null);
-  // A lógica de medição via JavaScript foi removida em favor da solução CSS-first, mais robusta.
-  // const [containerWidth, setContainerWidth] = useState(null);
   const containerRef = useRef(null);
 
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
@@ -34,9 +32,7 @@ function PDFViewer({ onClose }) {
     }
   };
 
-  // O useEffect com ResizeObserver foi removido para usar a solução CSS-first.
-  // useEffect(() => { ... });
-
+  // A solução CSS-first para o dimensionamento, que é mais robusta, é mantida.
   return (
     <div className={styles.pdfContainer} ref={containerRef}>
       <button className={`${styles.controlButton} ${styles.backButton}`} onClick={onClose}>
@@ -49,14 +45,12 @@ function PDFViewer({ onClose }) {
       </button>
 
       <Document
-        // --- CÓDIGO ATUALIZADO COM SUA URL DO BLOB ---
         file="https://2jxaxya6u8sxnnit.public.blob.vercel-storage.com/portfolio.pdf"
-        
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
         className={styles.pdfDocument}
         loading={<div className={styles.loading}>Carregando portfólio...</div>}
-        error={<div className={styles.error}>Falha ao carregar o PDF. Verifique a URL e a conexão.</div>}
+        error={<div className={styles.error}>Falha ao carregar o PDF.</div>}
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page

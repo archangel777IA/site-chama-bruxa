@@ -1,0 +1,23 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  background-color: #000000;
+}
+
+.mainContent {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Contêiner para centralizar o botão "Ver Portfólio" */
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
