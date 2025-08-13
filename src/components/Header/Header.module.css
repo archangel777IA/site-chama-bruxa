@@ -1,0 +1,28 @@
+.headerContainer {
+  width: 100%;
+  
+  /* --- ALTERAÇÃO PRINCIPAL --- */
+  /* Aumentamos drasticamente o padding vertical (primeiro valor).
+     Isso cria mais espaço acima e abaixo do logo, garantindo que a imagem
+     ampliada não seja cortada no topo ou no fundo.
+     '100px' é um valor de exemplo; ajuste-o se necessário para um encaixe perfeito.
+  */
+  padding: 100px 0; 
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+}
+
+.logoImage {
+  /* A largura base da imagem permanece a mesma */
+  max-width: 250px; 
+  height: auto;
+  
+  /* A transformação de escala permanece a mesma */
+  transform: scale(2);
+
+  /* A transição suave permanece a mesma */
+  transition: transform 0.3s ease-in-out;
+}
