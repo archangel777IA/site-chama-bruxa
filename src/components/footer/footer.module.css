@@ -1,0 +1,21 @@
+.footerContainer {
+  padding: calc(var(--espacamento-base) * 3) calc(var(--espacamento-base) * 2);
+  margin-top: calc(var(--espacamento-base) * 6);
+  background-color: rgba(0, 0, 0, 0.6); /* Um fundo escuro e semi-transparente */
+  color: var(--cor-fundo); /* Texto claro para contraste */
+  text-align: center;
+  border-top: 2px solid var(--cor-destaque);
+}
+
+.footerText {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.footerCredit {
+  margin: var(--espacamento-base) 0 0 0;
+  font-size: 0.8rem;
+  font-family: var(--fonte-titulos); /* Usando a fonte de destaque para um toque especial */
+  opacity: 0.7;
+}

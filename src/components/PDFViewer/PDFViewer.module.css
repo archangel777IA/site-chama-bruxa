@@ -1,0 +1,90 @@
+/* Definição da Animação de Brilho Pulsante - SEM ALTERAÇÕES */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 15px 5px rgba(140, 90, 59, 0.4); }
+  50% { box-shadow: 0 0 30px 10px rgba(140, 90, 59, 0.7); }
+  100% { box-shadow: 0 0 15px 5px rgba(140, 90, 59, 0.4); }
+}
+
+/* Contêiner principal que envolve tudo */
+.pdfContainer {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* O componente Document que tem o fundo, bordas e animação */
+.pdfDocument {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* --- CORREÇÃO CRÍTICA: Estilização da Página via CSS --- */
+.pdfPage {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 8px; /* Pequeno ajuste de espaçamento */
+}
+
+/* O seletor abaixo é a chave. Ele seleciona o <canvas> que a react-pdf renderiza
+   dentro do nosso componente .pdfPage e garante que ele seja responsivo. */
+.pdfPage canvas {
+  max-width: 100%;
+  height: auto !important; /* !important é necessário para sobrescrever estilos inline da biblioteca */
+}
+
+
+/* Botões de Controle - SEM ALTERAÇÕES */
+.controlButton {
+  position: absolute;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--cor-destaque, #8C5A3B);
+  color: #FFFFFF;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fonte-corpo, sans-serif);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.controlButton:hover {
+  background-color: var(--cor-destaque, #8C5A3B);
+  transform: scale(1.05);
+}
+
+.backButton {
+  top: 20px;
+  left: 20px;
+}
+
+.fullscreenButton {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Mensagens de carregamento e erro - SEM ALTERAÇÕES */
+.loading,
+.error {
+  color: #FFFFFF;
+  font-family: var(--fonte-corpo);
+  font-size: 1.5rem;
+  padding: 40px;
+}
+
+.error {
+  color: #ff4d4d;
+}

@@ -1,0 +1,31 @@
+.portfolioButton {
+  /* Estética do botão, alinhada com o tema */
+  background-color: transparent;
+  border: 2px solid var(--cor-destaque, #8C5A3B); /* Usa a cor de destaque do tema */
+  color: var(--cor-destaque, #8C5A3B);
+  padding: 15px 30px;
+  font-family: var(--fonte-titulos, 'Anton', sans-serif);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  
+  /* --- ALTERAÇÃO PRINCIPAL: Bordas Arredondadas --- */
+  /* Adicionamos um raio de 10px para arredondar os cantos do botão. */
+  border-radius: 10px;
+  
+  /* Transição suave para a animação */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  
+  /* Sombra sutil para dar profundidade */
+  box-shadow: 0 0 10px rgba(140, 90, 59, 0.5);
+}
+
+/* Animação de pulso ao passar o mouse por cima */
+.portfolioButton:hover {
+  /* Aumenta ligeiramente o tamanho do botão */
+  transform: scale(1.05);
+  
+  /* Aumenta a intensidade do brilho/sombra */
+  box-shadow: 0 0 25px rgba(140, 90, 59, 0.8);
+}

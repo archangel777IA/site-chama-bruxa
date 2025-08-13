@@ -1,0 +1,51 @@
+.contactSection {
+  padding: calc(var(--espacamento-base) * 8) calc(var(--espacamento-base) * 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* Reutilizando o efeito de vidro fosco para consistência visual */
+  background-color: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(5px);
+  margin: calc(var(--espacamento-base) * 4) auto;
+  max-width: 900px;
+  border: 2px solid var(--cor-destaque);
+  border-radius: 8px;
+}
+
+.contactContent h2 {
+  margin-bottom: calc(var(--espacamento-base) * 3);
+  font-size: 2.5rem;
+}
+
+.contactContent p {
+  margin-bottom: calc(var(--espacamento-base) * 4);
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contactLinks {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--espacamento-base) * 4);
+  flex-wrap: wrap;
+}
+
+.contactLinks a {
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  padding: calc(var(--espacamento-base) * 1.5) calc(var(--espacamento-base) * 3);
+  border-radius: 50px;
+  font-family: var(--fonte-corpo);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.contactLinks a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1); /* Sobrescreve o filtro padrão para este elemento */
+}

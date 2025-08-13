@@ -1,0 +1,72 @@
+/* --- ADIÇÃO --- */
+/* Importa os estilos da nossa nova animação */
+@import './animations.css';
+
+/* CSS Reset e Definições Globais de Estilo */
+:root {
+  /* As variáveis são mantidas para referência futura */
+  --cor-fundo: #B8D8B8;
+  --cor-texto: #2E3D32;
+  --cor-destaque: #8C5A3B;
+  --cor-preto-puro: #000000;
+
+  --fonte-titulos: 'Anton', sans-serif;
+  --fonte-corpo: 'Roboto', sans-serif;
+
+  --espacamento-base: 8px;
+}
+
+/* Reset Básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Estilo do Body */
+body {
+  background-color: #000000;
+  
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  overflow: auto; /* Restaurado para permitir rolagem geral */
+}
+
+/* O restante das regras permanece o mesmo */
+h1, h2, h3 {
+  font-family: var(--fonte-titulos);
+  color: var(--cor-destaque);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+p {
+  line-height: 1.6;
+  font-size: 1.1rem;
+  max-width: 65ch;
+}
+
+a {
+  color: var(--cor-destaque);
+  text-decoration: none;
+  font-weight: bold;
+  transition: filter 0.3s ease;
+}
+
+a:hover {
+  filter: brightness(1.2);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

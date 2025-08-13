@@ -1,0 +1,28 @@
+.aboutSection {
+  padding: calc(var(--espacamento-base) * 8) calc(var(--espacamento-base) * 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1); /* Um fundo sutil para destacar a seção */
+  backdrop-filter: blur(5px); /* Efeito de vidro fosco sobre o fundo do site */
+  margin: calc(var(--espacamento-base) * 4) auto;
+  max-width: 900px;
+  border: 2px solid var(--cor-destaque);
+  border-radius: 8px;
+}
+
+.aboutContent {
+  text-align: center;
+  max-width: 700px;
+}
+
+.aboutContent h2 {
+  margin-bottom: calc(var(--espacamento-base) * 3);
+  font-size: 2.5rem;
+}
+
+.aboutContent p {
+  margin-bottom: calc(var(--espacamento-base) * 2);
+  text-align: justify;
+  color: var(--cor-texto);
+}

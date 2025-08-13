@@ -1,0 +1,25 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  background-color: #000000;
+}
+
+.mainContent {
+  flex-grow: 1;
+  display: flex;
+  /* Adicionamos a centralização aqui para garantir que o .pdfContainer fique no meio */
+  justify-content: center;
+  align-items: center;
+  /* Adicionamos o padding aqui para criar a margem geral */
+  padding: 40px;
+}
+
+/* Contêiner para centralizar o botão */
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
