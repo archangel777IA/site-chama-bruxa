@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import styles from './PDFViewer.module.css';
 
-// --- ALTERAÇÃO CRÍTICA: Revertendo para a estratégia de CDN ---
-// Esta é a solução mais robusta para produção, evitando problemas de tamanho de arquivo.
+// A configuração do worker do PDF.js permanece a mesma, usando o CDN confiável.
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function PDFViewer({ onClose }) {
   const [numPages, setNumPages] = useState(null);
-  const [containerWidth, setContainerWidth] = useState(null);
+  // A lógica de medição via JavaScript foi removida em favor da solução CSS-first, mais robusta.
+  // const [containerWidth, setContainerWidth] = useState(null);
   const containerRef = useRef(null);
 
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
@@ -24,60 +24,44 @@ function PDFViewer({ onClose }) {
     if (elem) {
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
-      } else if (elem.mozRequestFullScreen) {
+      } else if (elem.mozRequestFullScreen) { // Firefox
         elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) {
+      } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
         elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
+      } else if (elem.msRequestFullscreen) { // IE/Edge
         elem.msRequestFullscreen();
       }
     }
   };
 
-  useEffect(() => {
-    const observer = new ResizeObserver(entries => {
-      const entry = entries[0];
-      if (entry) {
-        setContainerWidth(entry.contentRect.width);
-      }
-    });
-
-    const currentRef = containerRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
+  // O useEffect com ResizeObserver foi removido para usar a solução CSS-first.
+  // useEffect(() => { ... });
 
   return (
     <div className={styles.pdfContainer} ref={containerRef}>
       <button className={`${styles.controlButton} ${styles.backButton}`} onClick={onClose}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Voltar
       </button>
 
       <button className={`${styles.controlButton} ${styles.fullscreenButton}`} onClick={handleFullScreen}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
       </button>
 
       <Document
-        file="/portfolio.pdf"
+        // --- CÓDIGO ATUALIZADO COM SUA URL DO BLOB ---
+        file="https://2jxaxya6u8sxnnit.public.blob.vercel-storage.com/portfolio.pdf"
+        
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
         className={styles.pdfDocument}
         loading={<div className={styles.loading}>Carregando portfólio...</div>}
-        error={<div className={styles.error}>Falha ao carregar o PDF.</div>}
+        error={<div className={styles.error}>Falha ao carregar o PDF. Verifique a URL e a conexão.</div>}
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page
             key={`page_${index + 1}`}
             pageNumber={index + 1}
-            width={containerWidth}
             className={styles.pdfPage}
             renderTextLayer={false}
             renderAnnotationLayer={false}
