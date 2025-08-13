@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import styles from './PDFViewer.module.css';
+// --- ADIÇÃO: Importa o novo componente de loading ---
+import LoadingIndicator from '../LoadingIndicator/LoadingIndicator.jsx';
 
-// --- ALTERAÇÃO CRÍTICA E FINAL ---
-// Esta é a configuração mais fundamental e à prova de falhas.
-// Ela aponta para o arquivo que COPIAMOS MANUALMENTE para a pasta 'public'.
-// O Vite servirá este arquivo do seu próprio servidor local, eliminando 100% dos problemas de rede e CORS.
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function PDFViewer({ onClose }) {
   const [numPages, setNumPages] = useState(null);
   const containerRef = useRef(null);
+  // --- ADIÇÃO: Novo estado para controlar o progresso do download ---
+  const [loadProgress, setLoadProgress] = useState(0);
 
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
     setNumPages(nextNumPages);
@@ -18,6 +18,12 @@ function PDFViewer({ onClose }) {
 
   function onDocumentLoadError(error) {
     console.error('Erro detalhado ao carregar o PDF:', error.message);
+  }
+  
+  // --- ADIÇÃO: Função para ser chamada durante o download do PDF ---
+  function onDocumentLoadProgress({ loaded, total }) {
+    const progress = (loaded / total) * 100;
+    setLoadProgress(progress);
   }
 
   const handleFullScreen = () => {
@@ -38,7 +44,7 @@ function PDFViewer({ onClose }) {
   return (
     <div className={styles.pdfContainer} ref={containerRef}>
       <button className={`${styles.controlButton} ${styles.backButton}`} onClick={onClose}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="2" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Voltar
       </button>
 
@@ -47,13 +53,15 @@ function PDFViewer({ onClose }) {
       </button>
 
       <Document
-        // Mantemos a URL do Blob, pois o problema não é o PDF, mas o worker.
         file="https://2jxaxya6u8sxnnit.public.blob.vercel-storage.com/portfolio.pdf"
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
+        // --- ADIÇÃO: Passando a função de progresso para o componente ---
+        onLoadProgress={onDocumentLoadProgress}
         className={styles.pdfDocument}
-        loading={<div className={styles.loading}>Carregando portfólio...</div>}
-        error={<div className={styles.error}>Falha ao carregar o PDF.</div>}
+        // --- ALTERAÇÃO: Usando o novo componente de loading dinâmico ---
+        loading={<LoadingIndicator progress={loadProgress} />}
+        error={<div className={styles.error}>Falha ao carregar o PDF. Verifique a URL e a conexão.</div>}
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page
