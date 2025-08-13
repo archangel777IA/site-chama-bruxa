@@ -28,3 +28,5 @@ pnpm-debug.log*
 # OS generated files
 .DS_Store
 Thumbs.db
+# Ignorar arquivos de worker de PDF
+pdf.worker.min.js
