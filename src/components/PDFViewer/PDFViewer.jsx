@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'; // --- CORREÇÃO CRÍTICA: Remoção da vírgula extra ---
+import React, { useState, useEffect, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import styles from './PDFViewer.module.css';
 
-// A configuração do worker usando o CDN da cdnjs permanece como a solução mais robusta.
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+// --- ALTERAÇÃO CRÍTICA E FINAL ---
+// Esta é a configuração mais fundamental e à prova de falhas.
+// Ela aponta para o arquivo que COPIAMOS MANUALMENTE para a pasta 'public'.
+// O Vite servirá este arquivo do seu próprio servidor local, eliminando 100% dos problemas de rede e CORS.
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 function PDFViewer({ onClose }) {
   const [numPages, setNumPages] = useState(null);
@@ -22,21 +25,20 @@ function PDFViewer({ onClose }) {
     if (elem) {
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
-      } else if (elem.mozRequestFullScreen) { // Firefox
+      } else if (elem.mozRequestFullScreen) {
         elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+      } else if (elem.webkitRequestFullscreen) {
         elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { // IE/Edge
+      } else if (elem.msRequestFullscreen) {
         elem.msRequestFullscreen();
       }
     }
   };
 
-  // A solução CSS-first para o dimensionamento, que é mais robusta, é mantida.
   return (
     <div className={styles.pdfContainer} ref={containerRef}>
       <button className={`${styles.controlButton} ${styles.backButton}`} onClick={onClose}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="2" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Voltar
       </button>
 
@@ -45,6 +47,7 @@ function PDFViewer({ onClose }) {
       </button>
 
       <Document
+        // Mantemos a URL do Blob, pois o problema não é o PDF, mas o worker.
         file="https://2jxaxya6u8sxnnit.public.blob.vercel-storage.com/portfolio.pdf"
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={onDocumentLoadError}
